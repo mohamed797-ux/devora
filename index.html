@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEVORA - Programming. Creativity. Innovation.</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+[data-theme="dark"]{
+--bg:#000;--bg2:#0a0a0a;--bg-card:#111;--text:#fff;--text2:#a3a3a3;
+--accent:#8b5cf6;--accent-h:#7c3aed;--accent-l:#a78bfa;
+--border:#262626;--nav-bg:rgba(0,0,0,.9);--input-bg:#1a1a1a;
+--glass:rgba(10,10,10,.6);--glass-b:rgba(255,255,255,.08);--canvas:#0a0a0a;
+--logo-filter:invert(0);
+}
+[data-theme="light"]{
+--bg:#fff;--bg2:#f8f8f8;--bg-card:#fafafa;--text:#0a0a0a;--text2:#525252;
+--accent:#8b5cf6;--accent-h:#7c3aed;--accent-l:#a78bfa;
+--border:#e5e5e5;--nav-bg:rgba(255,255,255,.92);--input-bg:#f0f0f0;
+--glass:rgba(255,255,255,.7);--glass-b:rgba(0,0,0,.08);--canvas:#f8f8f8;
+--logo-filter:invert(1) brightness(2);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);transition:background .4s,color .4s;overflow-x:hidden}
+[dir="rtl"] body{font-family:'Tajawal','Space Grotesk',sans-serif}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
+
+.logo-img{height:44px;width:auto;filter:var(--logo-filter);transition:filter .3s}
+.logo-foot{height:32px;width:auto;filter:var(--logo-filter);transition:filter .3s}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes marqueeRtl{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
+@keyframes typing{0%,80%,100%{opacity:.2}40%{opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pulse-glow{0%,100%{box-shadow:0 0 15px rgba(139,92,246,.25)}50%{box-shadow:0 0 35px rgba(139,92,246,.5)}}
+@keyframes spin-slow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+.anim-up{animation:fadeUp .8s cubic-bezier(.16,1,.3,1) forwards;opacity:0}
+.d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}.d5{animation-delay:.5s}
+
+#neural-canvas{position:absolute;top:0;left:0;width:100%;height:100%;opacity:.4;z-index:0}
+
+.marquee-track{animation:marquee 35s linear infinite}
+[dir="rtl"] .marquee-track{animation:marqueeRtl 35s linear infinite}
+
+.chat-ai{background:var(--glass);border:1px solid var(--glass-b);backdrop-filter:blur(12px);border-radius:2px 16px 16px 16px}
+[dir="rtl"] .chat-ai{border-radius:16px 2px 16px 16px}
+.chat-user{background:var(--accent);color:#fff;border-radius:16px 2px 16px 16px}
+[dir="rtl"] .chat-user{border-radius:2px 16px 16px 16px}
+.tdot{animation:typing 1.4s infinite}.tdot:nth-child(2){animation-delay:.2s}.tdot:nth-child(3){animation-delay:.4s}
+
+.svc-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:32px;transition:all .3s;position:relative;overflow:hidden}
+.svc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-l));transform:scaleX(0);transition:transform .3s;transform-origin:left}
+[dir="rtl"] .svc-card::before{transform-origin:right}
+.svc-card:hover::before{transform:scaleX(1)}
+.svc-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 20px 40px -12px rgba(139,92,246,.2)}
+
+.career-item{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:24px;transition:all .3s;cursor:pointer}
+.career-item:hover{border-color:var(--accent);transform:translateX(8px)}
+[dir="rtl"] .career-item:hover{transform:translateX(-8px)}
+
+.form-input{background:var(--input-bg);border:1px solid var(--border);border-radius:8px;padding:12px 16px;color:var(--text);font-family:inherit;font-size:14px;width:100%;transition:all .3s;outline:none}
+.form-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(139,92,246,.15)}
+.form-input::placeholder{color:var(--text2)}
+
+.toast{position:fixed;bottom:30px;right:30px;padding:16px 28px;border-radius:10px;background:var(--accent);color:#fff;font-weight:600;z-index:9999;transform:translateY(120px);opacity:0;transition:all .4s;font-size:15px}
+[dir="rtl"] .toast{right:auto;left:30px}
+.toast.show{transform:translateY(0);opacity:1}
+
+.reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+.gradient-text{background:linear-gradient(135deg,var(--accent),var(--accent-l));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.sug-chip{background:var(--glass);border:1px solid var(--glass-b);backdrop-filter:blur(8px);padding:8px 16px;border-radius:20px;cursor:pointer;transition:all .2s;font-size:13px;color:var(--text2);font-family:inherit}
+.sug-chip:hover{border-color:var(--accent);color:var(--accent);background:rgba(139,92,246,.1)}
+
+.mobile-menu{transform:translateX(100%);transition:transform .3s ease}
+[dir="rtl"] .mobile-menu{transform:translateX(-100%)}
+.mobile-menu.open{transform:translateX(0)!important}
+
+.btn-primary{background:var(--accent);color:#fff;padding:14px 32px;border-radius:8px;font-weight:600;font-size:14px;transition:all .3s;border:none;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{background:var(--accent-h);transform:scale(1.02);box-shadow:0 8px 25px rgba(139,92,246,.3)}
+.btn-outline{background:transparent;color:var(--text);padding:14px 32px;border-radius:8px;font-weight:600;font-size:14px;transition:all .3s;border:1px solid var(--border);cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:8px}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+
+.stat-num{font-size:clamp(36px,5vw,56px);font-weight:700;color:var(--accent);line-height:1}
+
+.dot-bg{background-image:radial-gradient(rgba(139,92,246,.2) 1px,transparent 1px);background-size:24px 24px}
+
+.info-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px;transition:all .3s}
+.info-card:hover{border-color:rgba(139,92,246,.3)}
+
+.feature-row{display:flex;gap:16px;align-items:flex-start}
+[dir="rtl"] .feature-row{flex-direction:row-reverse;text-align:right}
+
+.nav-link{font-size:12px;font-weight:400;color:var(--text2);text-transform:uppercase;letter-spacing:.1em;text-decoration:none;transition:color .3s;padding:4px 0;position:relative}
+.nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--accent);transition:width .3s}
+[dir="rtl"] .nav-link::after{left:auto;right:0}
+.nav-link:hover{color:var(--accent)}
+.nav-link:hover::after{width:100%}
+
+@media(max-width:768px){
+.hide-mobile{display:none!important}
+.show-mobile{display:block!important}
+.grid-responsive{grid-template-columns:1fr!important}
+}
+@media(min-width:769px){
+.show-mobile{display:none!important}
+}
+</style></head>
+<body>
+
+<div id="toast" class="toast"></div>
+
+<!-- ========== NAVIGATION ========== -->
+<nav style="background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);position:fixed;top:0;left:0;right:0;z-index:500;transition:background .3s">
+<div style="max-width:1280px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between">
+<a href="#home" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+<img src="https://z-cdn-media.chatglm.cn/files/07f251b9-14fd-4624-b6cd-6691a64ee023.png?auth_key=1883600230-1996aaf869bf4d3799b2ca8452c87693-0-583f8622721dd168f82c78a87649cbbf" class="logo-img" alt="DEVORA Logo">
+<span style="font-size:20px;font-weight:700;color:var(--text);letter-spacing:-0.5px;transition:color .3s">DEVORA</span>
+</a>
+
+<div class="hide-mobile" style="display:flex;align-items:center;gap:28px">
+<a href="#home" class="nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
+<a href="#services" class="nav-link" data-en="Services" data-ar="خدماتنا">Services</a>
+<a href="#ai-solutions" class="nav-link" data-en="AI Solutions" data-ar="حلول AI">AI Solutions</a>
+<a href="#about" class="nav-link" data-en="About" data-ar="من نحن">About</a>
+<a href="#careers" class="nav-link" data-en="Careers" data-ar="وظائف">Careers</a>
+<a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل">Contact</a>
+</div>
+
+<div style="display:flex;align-items:center;gap:10px">
+<button onclick="toggleLang()" id="lang-btn" style="background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.3);padding:6px 14px;border-radius:8px;cursor:pointer;color:var(--accent);font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;transition:all .2s" title="Switch Language">ع</button>
+<button onclick="toggleTheme()" id="theme-btn" style="background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.3);width:38px;height:38px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s" title="Toggle Theme">
+<span id="theme-icon" style="font-size:18px;color:var(--accent)">☀️</span>
+</button>
+<button onclick="toggleMobile()" class="show-mobile" style="background:none;border:none;color:var(--text);cursor:pointer;font-size:24px;display:none">☰</button>
+</div>
+</div></nav>
+
+<!-- Mobile Menu -->
+<div id="mobile-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:600;display:none" onclick="toggleMobile()"></div>
+<div id="mobile-menu" class="mobile-menu" style="position:fixed;top:0;right:0;width:280px;height:100vh;background:var(--bg);z-index:700;padding:32px 24px;border-left:1px solid var(--border);display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px">
+<span style="font-weight:700;font-size:18px;color:var(--text)">DEVORA</span>
+<button onclick="toggleMobile()" style="background:none;border:none;color:var(--text);cursor:pointer;font-size:24px">✕</button>
+</div>
+<a href="#home" onclick="toggleMobile()" style="color:var(--text2);text-decoration:none;font-size:16px;padding:12px 0;border-bottom:1px solid var(--border)" data-en="Home" data-ar="الرئيسية">Home</a>
+<a href="#services" onclick="toggleMobile()" style="color:var(--text2);text-decoration:none;font-size:16px;padding:12px 0;border-bottom:1px solid var(--border)" data-en="Services" data-ar="خدماتنا">Services</a>
+<a href="#ai-solutions" onclick="toggleMobile()" style="color:var(--text2);text-decoration:none;font-size:16px;padding:12px 0;border-bottom:1px solid var(--border)" data-en="AI Solutions" data-ar="حلول AI">AI Solutions</a>
+<a href="#about" onclick="toggleMobile()" style="color:var(--text2);text-decoration:none;font-size:16px;padding:12px 0;border-bottom:1px solid var(--border)" data-en="About" data-ar="من نحن">About</a>
+<a href="#careers" onclick="toggleMobile()" style="color:var(--text2);text-decoration:none;font-size:16px;padding:12px 0;border-bottom:1px solid var(--border)" data-en="Careers" data-ar="وظائف">Careers</a>
+<a href="#contact" onclick="toggleMobile()" style="color:var(--text2);text-decoration:none;font-size:16px;padding:12px 0" data-en="Contact" data-ar="تواصل">Contact</a>
+</div>
+
+<!-- ========== HERO ========== -->
+<section id="home" style="min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;background:var(--canvas);transition:background .4s">
+<canvas id="neural-canvas"></canvas>
+<div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,var(--bg));z-index:1;pointer-events:none"></div>
+<div style="max-width:1280px;margin:0 auto;padding:100px 24px 80px;position:relative;z-index:2;width:100%">
+<div style="max-width:720px">
+<div class="anim-up" style="display:inline-block;padding:6px 18px;border-radius:20px;background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.3);margin-bottom:28px">
+<span style="font-size:13px;font-weight:500;color:var(--accent);letter-spacing:.05em" data-en="Programming. Creativity. Innovation." data-ar="برمجة. إبداع. ابتكار.">Programming. Creativity. Innovation.</span>
+</div>
+<h1 class="anim-up d1" style="font-size:clamp(36px,7vw,80px);font-weight:700;line-height:1.05;letter-spacing:-0.04em;margin-bottom:24px;color:var(--text)">
+<span data-en="Building the" data-ar="نبني">Building the</span><br>
+<span class="gradient-text" data-en="Digital Future" data-ar="المستقبل الرقمي">Digital Future</span><br>
+<span data-en="with AI & Code" data-ar="بالذكاء والكود">with AI & Code</span>
+</h1>
+<p class="anim-up d2" style="font-size:18px;font-weight:300;color:var(--text2);line-height:1.7;max-width:560px;margin-bottom:36px" data-en="DEVORA is a leading company in web development, mobile apps, and AI automation. We deliver innovative technical solutions to businesses and individuals." data-ar="ديفورا شركة رائدة في تطوير الويب وتطبيقات الهاتف وأتمتة الذكاء الاصطناعي. نقدم حلولاً تقنية مبتكرة للشركات والأفراد.">DEVORA is a leading company in web development, mobile apps, and AI automation. We deliver innovative technical solutions to businesses and individuals.</p>
+<div class="anim-up d3" style="display:flex;gap:14px;flex-wrap:wrap">
+<a href="#contact" class="btn-primary" style="text-decoration:none" data-en="Start Your Project" data-ar="ابدأ مشروعك">Start Your Project →</a>
+<a href="#ai-solutions" class="btn-outline" style="text-decoration:none" data-en="Explore AI Solutions" data-ar="اكتشف حلول AI">Explore AI Solutions</a>
+</div>
+<!-- Hero Chat Preview -->
+<div class="anim-up d4" style="margin-top:48px;max-width:440px">
+<div style="background:var(--glass);border:1px solid var(--glass-b);backdrop-filter:blur(16px);border-radius:16px;padding:20px;animation:float 6s ease-in-out infinite">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+<div style="width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse-glow 2s infinite"></div>
+<span style="font-size:12px;font-weight:600;color:var(--accent)" data-en="DEVORA AI Assistant" data-ar="مساعد ديفورا الذكي">DEVORA AI Assistant</span>
+</div>
+<div class="chat-ai" style="padding:10px 14px;margin-bottom:10px">
+<p style="font-size:13px;color:var(--text2)" data-en="Hello! I can automate your customer support and organize your business data 24/7." data-ar="مرحباً! يمكنني أتمتة دعم عملائك وتنظيم بيانات عملك على مدار الساعة.">Hello! I can automate your customer support and organize your business data 24/7.</p>
+</div>
+<div class="chat-user" style="padding:10px 14px;margin-bottom:10px;max-width:75%;margin-left:auto">
+<p style="font-size:13px" data-en="How can AI help my business?" data-ar="كيف يساعدني الذكاء الاصطناعي؟">How can AI help my business?</p>
+</div>
+<div class="chat-ai" style="padding:10px 14px">
+<p style="font-size:13px;color:var(--text2)" data-en="AI automates 80% of queries, analyzes data patterns, and provides 24/7 support — saving time & increasing revenue." data-ar="الذكاء الاصطناعي يؤتمت 80% من الاستفسارات، يحلل أنماط البيانات، ويقدم دعم على مدار الساعة — يوفر الوقت ويزيد الإيرادات.">AI automates 80% of queries, analyzes data patterns, and provides 24/7 support — saving time & increasing revenue.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ========== TECH MARQUEE ========== -->
+<section style="padding:28px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;background:var(--bg2);transition:background .4s">
+<div style="overflow:hidden;mask-image:linear-gradient(to right,transparent,#000 10%,#000 90%,transparent)">
+<div class="marquee-track" style="display:flex;gap:48px;width:max-content">
+<span style="color:var(--text2);font-size:14px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px">⚡ React</span>
+<span style="color:var(--text2);font-size:14px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px">📱 Flutter</span>
+<span style="color:var(--text2);font-size:14px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px">🧠 OpenAI</span>
+<span style="color:var(--text2);font-size:14px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px">🗄️ Firebase</span>
+<span style="color:var(--text2);font-size:14px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px">☁️ AWS</span>
+<span style="color:var(--text2);font-size:14px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px">🟢 Node.js</span>
+<span style="color:var(--text2);font-size:14px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px">🎨 Figma</span>
+<span style="color:var(--text2);font-size:14px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px">🐍 Python</span>
+<span style="color:var(--text2);font-size:14px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px">🌐 Next.js</span>
+<span style="color:var(--text2);font-size:14px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px">🛡️ TypeScript</span>
+<span style="color:var(--text2);font-size:14px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px">⚡ React</span>
+<span style="color:var(--text2);font-size:14px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px">📱 Flutter</span>
+<span style="color:var(--text2);font-size:14px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px">🧠 OpenAI</span>
+<span style="color:var(--text2);font-size:14px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px">🗄️ Firebase</span>
+<span style="color:var(--text2);font-size:14px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px">☁️ AWS</span>
+<span style="color:var(--text2);font-size:14px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px">🟢 Node.js</span>
+<span style="color:var(--text2);font-size:14px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px">🎨 Figma</span>
+<span style="color:var(--text2);font-size:14px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px">🐍 Python</span>
+<span style="color:var(--text2);font-size:14px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px">🌐 Next.js</span>
+<span style="color:var(--text2);font-size:14px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px">🛡️ TypeScript</span>
+</div>
+</div>
+</section>
+
+<!-- ========== SLOGAN ========== -->
+<section style="padding:100px 24px;text-align:center;background:var(--bg);transition:background .4s">
+<div class="reveal" style="max-width:900px;margin:0 auto">
+<h2 style="font-size:clamp(32px,6vw,68px);font-weight:700;line-height:1.1;letter-spacing:-0.03em;color:var(--text)">
+<span data-en="Programming." data-ar="برمجة.">Programming.</span>
+<span data-en=" Creativity." data-ar=" إبداع."> Creativity.</span><br>
+<span class="gradient-text" data-en="Innovation." data-ar="ابتكار.">Innovation.</span>
+</h2>
+<p style="color:var(--text2);font-size:18px;margin-top:24px;font-weight:300" data-en="Three words that define everything we build at DEVORA." data-ar="ثلاث كلمات تحدد كل ما نبنيه في ديفورا.">Three words that define everything we build at DEVORA.</p>
+</div>
+</section>
+
+<!-- ========== SERVICES ========== -->
+<section id="services" style="padding:100px 24px;background:var(--bg2);transition:background .4s">
+<div style="max-width:1280px;margin:0 auto">
+<div class="reveal" style="text-align:center;margin-bottom:64px">
+<span style="font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.15em" data-en="OUR SERVICES" data-ar="خدماتنا">OUR SERVICES</span>
+<h2 style="font-size:clamp(28px,4vw,48px);font-weight:700;margin-top:12px;letter-spacing:-0.03em;color:var(--text)" data-en="Comprehensive Tech Solutions" data-ar="حلول تقنية متكاملة">Comprehensive Tech Solutions</h2>
+<p style="color:var(--text2);font-size:17px;margin-top:16px;max-width:600px;margin-left:auto;margin-right:auto;font-weight:300" data-en="From web platforms to AI-powered tools, we build solutions that drive results." data-ar="من منصات الويب إلى أدوات الذكاء الاصطناعي، نبني حلولاً تحقق نتائج.">From web platforms to AI-powered tools, we build solutions that drive results.</p>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px">
+<!-- Web Dev -->
+<div class="svc-card reveal">
+<div style="width:52px;height:52px;border-radius:12px;background:rgba(139,92,246,.1);display:flex;align-items:center;justify-content:center;margin-bottom:24px;font-size:24px">🌐</div>
+<h3 style="font-size:20px;font-weight:600;margin-bottom:12px;color:var(--text)" data-en="Web Development" data-ar="تطوير الويب">Web Development</h3>
+<p style="color:var(--text2);font-size:15px;line-height:1.7" data-en="Custom websites and web applications built with cutting-edge technologies. From landing pages to complex platforms, we deliver fast, responsive, and scalable solutions tailored to your business needs." data-ar="مواقع وتطبيقات ويب مخصصة بأحدث التقنيات. من صفحات الهبوط إلى المنصات المعقدة، نقدم حلولاً سريعة ومتجاوبة وقابلة للتوسع مصممة لاحتياجات عملك.">Custom websites and web applications built with cutting-edge technologies. From landing pages to complex platforms, we deliver fast, responsive, and scalable solutions tailored to your business needs.</p>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:20px">
+<span style="font-size:11px;padding:4px 12px;border-radius:12px;background:rgba(139,92,246,.1);color:var(--accent)">React</span>
+<span style="font-size:11px;padding:4px 12px;border-radius:12px;background:rgba(139,92,246,.1);color:var(--accent)">Next.js</span>
+<span style="font-size:11px;padding:4px 12px;border-radius:12px;background:rgba(139,92,246,.1);color:var(--accent)">Node.js</span>
+</div>
+</div>
+<!-- Mobile Dev -->
+<div class="svc-card reveal">
+<div style="width:52px;height:52px;border-radius:12px;background:rgba(139,92,246,.1);display:flex;align-items:center;justify-content:center;margin-bottom:24px;font-size:24px">📱</div>
+<h3 style="font-size:20px;font-weight:600;margin-bottom:12px;color:var(--text)" data-en="Mobile App Development" data-ar="تطوير التطبيقات">Mobile App Development</h3>
+<p style="color:var(--text2);font-size:15px;line-height:1.7" data-en="High-performance Android and iOS applications with seamless user experiences. Native and cross-platform development using Flutter and React Native that your users will love." data-ar="تطبيقات أندرويد و iOS عالية الأداء بتجارب مستخدم سلسة. تطوير أصلي ومتعدد المنصات باستخدام Flutter و React Native سيعشقه مستخدموك.">High-performance Android and iOS applications with seamless user experiences. Native and cross-platform development using Flutter and React Native that your users will love.</p>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:20px">
+<span style="font-size:11px;padding:4px 12px;border-radius:12px;background:rgba(139,92,246,.1);color:var(--accent)">Flutter</span>
+<span style="font-size:11px;padding:4px 12px;border-radius:12px;background:rgba(139,92,246,.1);color:var(--accent)">React Native</span>
+<span style="font-size:11px;padding:4px 12px;border-radius:12px;background:rgba(139,92,246,.1);color:var(--accent)">Swift</span>
+</div>
+</div>
+<!-- AI Automation -->
+<div class="svc-card reveal">
+<div style="width:52px;height:52px;border-radius:12px;background:rgba(139,92,246,.1);display:flex;align-items:center;justify-content:center;margin-bottom:24px;font-size:24px">🧠</div>
+<h3 style="font-size:20px;font-weight:600;margin-bottom:12px;color:var(--text)" data-en="AI Automation" data-ar="أتمتة الذكاء الاصطناعي">AI Automation</h3>
+<p style="color:var(--text2);font-size:15px;line-height:1.7" data-en="Intelligent automation solutions that transform your business operations. From AI chatbots to data analysis, let AI handle the repetitive work while you focus on growth and innovation." data-ar="حلول أتمتة ذكية تحول عمليات عملك. من روبوتات الدردشة الذكية إلى تحليل البيانات، دع الذكاء الاصطناعي يتولى العمل المتكرر بينما تركز على النمو والابتكار.">Intelligent automation solutions that transform your business operations. From AI chatbots to data analysis, let AI handle the repetitive work while you focus on growth and innovation.</p>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:20px">
+<span style="font-size:11px;padding:4px 12px;border-radius:12px;background:rgba(139,92,246,.1);color:var(--accent)">OpenAI</span>
+<span style="font-size:11px;padding:4px 12px;border-radius:12px;background:rgba(139,92,246,.1);color:var(--accent)">Python</span>
+<span style="font-size:11px;padding:4px 12px;border-radius:12px;background:rgba(139,92,246,.1);color:var(--accent)">NLP</span>
+</div>
+</div>
+<!-- UI/UX Design -->
+<div class="svc-card reveal">
+<div style="width:52px;height:52px;border-radius:12px;background:rgba(139,92,246,.1);display:flex;align-items:center;justify-content:center;margin-bottom:24px;font-size:24px">🎨</div>
+<h3 style="font-size:20px;font-weight:600;margin-bottom:12px;color:var(--text)" data-en="UI/UX Design" data-ar="تصميم واجهات المستخدم">UI/UX Design</h3>
+<p style="color:var(--text2);font-size:15px;line-height:1.7" data-en="Beautiful, intuitive interfaces designed with your users in mind. We create seamless experiences that keep users engaged and drive conversions through research-driven design." data-ar="واجهات جميلة وبديهية مصممة مع وضع مستخدميك في الاعتبار. نصنع تجارب سلسة تحافظ على تفاعل المستخدمين وتزيد التحويلات من خلال التصميم المبني على البحث.">Beautiful, intuitive interfaces designed with your users in mind. We create seamless experiences that keep users engaged and drive conversions through research-driven design.</p>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:20px">
+<span style="font-size:11px;padding:4px 12px;border-radius:12px;background:rgba(139,92,246,.1);color:var(--accent)">Figma</span>
+<span style="font-size:11px;padding:4px 12px;border-radius:12px;background:rgba(139,92,246,.1);color:var(--accent)">Prototyping</span>
+</div>
+</div>
+<!-- Cloud & DevOps -->
+<div class="svc-card reveal">
+<div style="width:52px;height:52px;border-radius:12px;background:rgba(139,92,246,.1);display:flex;align-items:center;justify-content:center;margin-bottom:24px;font-size:24px">☁️</div>
+<h3 style="font-size:20px;font-weight:600;margin-bottom:12px;color:var(--text)" data-en="Cloud & DevOps" data-ar="السحابة و DevOps">Cloud & DevOps</h3>
+<p style="color:var(--text2);font-size:15px;line-height:1.7" data-en="Scalable cloud infrastructure and CI/CD pipelines that keep your applications running smoothly. We handle deployment, monitoring, and optimization so you don't have to." data-ar="بنية تحتية سحابية قابلة للتوسع وخطوط CI/CD تحافظ على تشغيل تطبيقاتك بسلاسة. نتولى النشر والمراقبة والتحسين بدلاً عنك.">Scalable cloud infrastructure and CI/CD pipelines that keep your applications running smoothly. We handle deployment, monitoring, and optimization so you don't have to.</p>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:20px">
+<span style="font-size:11px;padding:4px 12px;border-radius:12px;background:rgba(139,92,246,.1);color:var(--accent)">AWS</span>
+<span style="font-size:11px;padding:4px 12px;border-radius:12px;background:rgba(139,92,246,.1);color:var(--accent)">Docker</span>
+<span style="font-size:11px;padding:4px 12px;border-radius:12px;background:rgba(139,92,246,.1);color:var(--accent)">CI/CD</span>
+</div>
+</div>
+<!-- Consulting -->
+<div class="svc-card reveal">
+<div style="width:52px;height:52px;border-radius:12px;background:rgba(139,92,246,.1);display:flex;align-items:center;justify-content:center;margin-bottom:24px;font-size:24px">💡</div>
+<h3 style="font-size:20px;font-weight:600;margin-bottom:12px;color:var(--text)" data-en="Tech Consulting" data-ar="استشارات تقنية">Tech Consulting</h3>
+<p style="color:var(--text2);font-size:15px;line-height:1.7" data-en="Strategic technology guidance to help you make the right decisions. From architecture planning to technology selection, we ensure your tech stack aligns with your business goals." data-ar="إرشاد تقني استراتيجي لمساعدتك في اتخاذ القرارات الصحيحة. من تخطيط البنية إلى اختيار التقنيات، نضمن توافق حزمتك التقنية مع أهداف عملك.">Strategic technology guidance to help you make the right decisions. From architecture planning to technology selection, we ensure your tech stack aligns with your business goals.</p>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:20px">
+<span style="font-size:11px;padding:4px 12px;border-radius:12px;background:rgba(139,92,246,.1);color:var(--accent)">Strategy</span>
+<span style="font-size:11px;padding:4px 12px;border-radius:12px;background:rgba(139,92,246,.1);color:var(--accent)">Architecture</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ========== AI SOLUTIONS ========== -->
+<section id="ai-solutions" style="padding:100px 24px;background:var(--bg);position:relative;overflow:hidden;transition:background .4s">
+<div class="dot-bg" style="position:absolute;inset:0;opacity:.3"></div>
+<div style="max-width:1280px;margin:0 auto;position:relative;z-index:1">
+<div class="reveal" style="text-align:center;margin-bottom:64px">
+<span style="font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.15em" data-en="AI SOLUTIONS" data-ar="حلول الذكاء الاصطناعي">AI SOLUTIONS</span>
+<h2 style="font-size:clamp(28px,4vw,48px);font-weight:700;margin-top:12px;letter-spacing:-0.03em;color:var(--text)" data-en="Meet DEVORA AI Assistant" data-ar="تعرّف على مساعد ديفورا الذكي">Meet DEVORA AI Assistant</h2>
+<p style="color:var(--text2);font-size:17px;margin-top:16px;max-width:620px;margin-left:auto;margin-right:auto;font-weight:300;line-height:1.7" data-en="Our flagship product — an intelligent AI tool for businesses that automatically responds to customers and organizes data. Available 24/7, no human intervention needed." data-ar="منتجنا الرائد — أداة ذكية بالذكاء الاصطناعي للأعمال ترد تلقائياً على العملاء وتنظم البيانات. متاح على مدار الساعة بدون تدخل بشري.">Our flagship product — an intelligent AI tool for businesses that automatically responds to customers and organizes data. Available 24/7, no human intervention needed.</p>
+</div>
+
+<div class="grid-responsive" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center">
+<!-- Features -->
+<div class="reveal">
+<div style="display:flex;flex-direction:column;gap:24px">
+<div class="feature-row">
+<div style="width:44px;height:44px;border-radius:10px;background:rgba(139,92,246,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px">💬</div>
+<div>
+<h4 style="font-weight:600;margin-bottom:6px;color:var(--text)" data-en="Auto Customer Support" data-ar="دعم عملاء تلقائي">Auto Customer Support</h4>
+<p style="color:var(--text2);font-size:14px;line-height:1.6" data-en="Responds to 80% of customer queries instantly, 24/7. No more waiting, no more missed messages." data-ar="يرد على 80% من استفسارات العملاء فوراً، على مدار الساعة. لا مزيد من الانتظار أو الرسائل المفقودة.">Responds to 80% of customer queries instantly, 24/7. No more waiting, no more missed messages.</p>
+</div>
+</div>
+<div class="feature-row">
+<div style="width:44px;height:44px;border-radius:10px;background:rgba(139,92,246,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px">📊</div>
+<div>
+<h4 style="font-weight:600;margin-bottom:6px;color:var(--text)" data-en="Smart Data Organization" data-ar="تنظيم ذكي للبيانات">Smart Data Organization</h4>
+<p style="color:var(--text2);font-size:14px;line-height:1.6" data-en="Automatically categorizes, tags, and structures your business data. Generate reports and insights with one click." data-ar="يصنف ويوسم ويهيكل بيانات عملك تلقائياً. أنشئ تقارير ورؤى بنقرة واحدة.">Automatically categorizes, tags, and structures your business data. Generate reports and insights with one click.</p>
+</div>
+</div>
+<div class="feature-row">
+<div style="width:44px;height:44px;border-radius:10px;background:rgba(139,92,246,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px">⚡</div>
+<div>
+<h4 style="font-weight:600;margin-bottom:6px;color:var(--text)" data-en="Easy Integration" data-ar="تكامل سهل وسريع">Easy Integration</h4>
+<p style="color:var(--text2);font-size:14px;line-height:1.6" data-en="Connects with your existing CRM, helpdesk, and tools in minutes — not days. Zero code changes required." data-ar="يتصل بنظام إدارة العملاء وأدوات المساعدة الحالية في دقائق — وليس أيام. بدون أي تغيير في الكود.">Connects with your existing CRM, helpdesk, and tools in minutes — not days. Zero code changes required.</p>
+</div>
+</div>
+<div class="feature-row">
+<div style="width:44px;height:44px;border-radius:10px;background:rgba(139,92,246,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px">🔒</div>
+<div>
+<h4 style="font-weight:600;margin-bottom:6px;color:var(--text)" data-en="Enterprise Security" data-ar="أمان على مستوى المؤسسات">Enterprise Security</h4>
+<p style="color:var(--text2);font-size:14px;line-height:1.6" data-en="End-to-end encryption, SOC 2 compliant, and GDPR ready. Your data stays safe and private." data-ar="تشفير شامل، متوافق مع SOC 2، وجاهز للـ GDPR. بياناتك تبقى آمنة وخاصة.">End-to-end encryption, SOC 2 compliant, and GDPR ready. Your data stays safe and private.</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Interactive Chat Demo -->
+<div class="reveal">
+<div style="background:var(--glass);border:1px solid var(--glass-b);backdrop-filter:blur(16px);border-radius:16px;padding:24px;max-width:460px;margin-left:auto;animation:float 6s ease-in-out infinite">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border)">
+<div style="width:10px;height:10px;border-radius:50%;background:var(--accent);animation:pulse-glow 2s infinite"></div>
+<span style="font-size:13px;font-weight:600;color:var(--accent)" data-en="DEVORA AI Assistant" data-ar="مساعد ديفورا الذكي">DEVORA AI Assistant</span>
+<span style="font-size:11px;color:var(--text2);margin-left:auto;background:rgba(139,92,246,.1);padding:2px 8px;border-radius:8px" data-en="Online" data-ar="متصل">Online</span>
+</div>
+<div id="chat-messages" style="min-height:180px;max-height:280px;overflow-y:auto;margin-bottom:16px;display:flex;flex-direction:column;gap:10px">
+<div class="chat-ai" style="padding:10px 14px">
+<p style="font-size:13px;color:var(--text2);line-height:1.5" data-en="Hello! I'm DEVORA AI Assistant. I can automate your customer support, organize data, and boost efficiency. What would you like to know?" data-ar="مرحباً! أنا مساعد ديفورا الذكي. يمكنني أتمتة دعم عملائك، تنظيم البيانات، وزيادة الكفاءة. ماذا تريد أن تعرف؟">Hello! I'm DEVORA AI Assistant. I can automate your customer support, organize data, and boost efficiency. What would you like to know?</p>
+</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px" id="chat-suggestions">
+<button class="sug-chip" onclick="sendSuggestion(0)" data-en="Automate support" data-ar="أتمتة الدعم">Automate support</button>
+<button class="sug-chip" onclick="sendSuggestion(1)" data-en="Analyze my data" data-ar="تحليل بياناتي">Analyze my data</button>
+<button class="sug-chip" onclick="sendSuggestion(2)" data-en="Integrate AI" data-ar="دمج الذكاء">Integrate AI</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- AI Stats -->
+<div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;margin-top:64px;max-width:800px;margin-left:auto;margin-right:auto">
+<div style="text-align:center;padding:24px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;transition:all .3s">
+<div style="font-size:36px;font-weight:700;color:var(--accent)">80%</div>
+<p style="color:var(--text2);font-size:13px;margin-top:4px" data-en="Queries Automated" data-ar="استفسارات مؤتمتة">Queries Automated</p>
+</div>
+<div style="text-align:center;padding:24px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;transition:all .3s">
+<div style="font-size:36px;font-weight:700;color:var(--accent)">24/7</div>
+<p style="color:var(--text2);font-size:13px;margin-top:4px" data-en="Always Available" data-ar="متاح دائماً">Always Available</p>
+</div>
+<div style="text-align:center;padding:24px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;transition:all .3s">
+<div style="font-size:36px;font-weight:700;color:var(--accent)">3x</div>
+<p style="color:var(--text2);font-size:13px;margin-top:4px" data-en="Faster Responses" data-ar="استجابات أسرع">Faster Responses</p>
+</div>
+<div style="text-align:center;padding:24px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;transition:all .3s">
+<div style="font-size:36px;font-weight:700;color:var(--accent)">60%</div>
+<p style="color:var(--text2);font-size:13px;margin-top:4px" data-en="Cost Reduction" data-ar="تقليل التكاليف">Cost Reduction</p>
+</div>
+</div>
+</div></section>
+
+<!-- ========== ABOUT ========== -->
+<section id="about" style="padding:100px 24px;background:var(--bg2);transition:background .4s">
+<div style="max-width:1280px;margin:0 auto">
+<div class="reveal" style="text-align:center;margin-bottom:64px">
+<span style="font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.15em" data-en="ABOUT DEVORA" data-ar="من نحن">ABOUT DEVORA</span>
+<h2 style="font-size:clamp(28px,4vw,48px);font-weight:700;margin-top:12px;letter-spacing:-0.03em;color:var(--text)" data-en="Driven by Innovation" data-ar="يقودنا الابتكار">Driven by Innovation</h2>
+</div>
+
+<!-- About Content -->
+<div class="grid-responsive reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-bottom:64px">
+<div>
+<p style="font-size:17px;color:var(--text2);line-height:1.8;font-weight:300;margin-bottom:24px" data-en="DEVORA is a leading company in software and AI development, delivering innovative technical solutions to businesses and individuals. We combine cutting-edge technology with creative thinking to build products that make a real difference." data-ar="ديفورا شركة رائدة في تطوير البرمجيات والذكاء الاصطناعي، تقدم حلولاً تقنية مبتكرة للشركات والأفراد. نجمع بين أحدث التقنيات والتفكير الإبداعي لبناء منتجات تحقق فرقاً حقيقياً.">DEVORA is a leading company in software and AI development, delivering innovative technical solutions to businesses and individuals. We combine cutting-edge technology with creative thinking to build products that make a real difference.</p>
+<p style="font-size:17px;color:var(--text2);line-height:1.8;font-weight:300" data-en="Our team of expert developers, designers, and AI specialists work together to transform ideas into powerful digital solutions. Whether you need a web platform, a mobile app, or an AI-powered tool — we've got you covered." data-ar="فريقنا من المطورين والمصممين ومتخصصي الذكاء الاصطناعي يعمل معاً لتحويل الأفكار إلى حلول رقمية قوية. سواء كنت تحتاج منصة ويب أو تطبيق موبايل أو أداة مدعومة بالذكاء الاصطناعي — نحن هنا لمساعدتك.">Our team of expert developers, designers, and AI specialists work together to transform ideas into powerful digital solutions. Whether you need a web platform, a mobile app, or an AI-powered tool — we've got you covered.</p>
+</div>
+<!-- Vision Card -->
+<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:40px;position:relative;overflow:hidden">
+<div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-l))"></div>
+<div style="font-size:36px;margin-bottom:16px">👁️</div>
+<h3 style="font-size:22px;font-weight:700;margin-bottom:16px;color:var(--text)" data-en="Our Vision" data-ar="رؤيتنا">Our Vision</h3>
+<p style="color:var(--text2);font-size:15px;line-height:1.7" data-en="To be a leading company in software and AI development, delivering innovative technical solutions to businesses and individuals — pushing the boundaries of what technology can achieve." data-ar="أن نكون شركة رائدة في تطوير البرمجيات والذكاء الاصطناعي، نقدم حلولاً تقنية مبتكرة للشركات والأفراد — ندفع حدود ما يمكن للتقنية تحقيقه.">To be a leading company in software and AI development, delivering innovative technical solutions to businesses and individuals — pushing the boundaries of what technology can achieve.</p>
+</div>
+</div>
+
+<!-- Mission -->
+<div class="reveal" style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:40px;text-align:center;margin-bottom:64px;position:relative;overflow:hidden">
+<div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent-l),var(--accent))"></div>
+<div style="font-size:36px;margin-bottom:16px">🎯</div>
+<h3 style="font-size:22px;font-weight:700;margin-bottom:16px;color:var(--text)" data-en="Our Mission" data-ar="مهمتنا">Our Mission</h3>
+<p style="color:var(--text2);font-size:15px;line-height:1.7;max-width:700px;margin:0 auto" data-en="To empower businesses and individuals with innovative technology solutions that drive growth, efficiency, and success in the digital age. We believe every great idea deserves world-class execution." data-ar="تمكين الشركات والأفراد بحلول تقنية مبتكرة تدفع النمو والكفاءة والنجاح في العصر الرقمي. نؤمن أن كل فكرة عظيمة تستحق تنفيذاً على مستوى عالمي.">To empower businesses and individuals with innovative technology solutions that drive growth, efficiency, and success in the digital age. We believe every great idea deserves world-class execution.</p>
+</div>
+
+<!-- Stats -->
+<div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:24px;max-width:900px;margin:0 auto">
+<div style="text-align:center;padding:32px 16px">
+<div class="stat-num">50+</div>
+<p style="color:var(--text2);font-size:14px;margin-top:8px" data-en="Projects Delivered" data-ar="مشروع منجز">Projects Delivered</p>
+</div>
+<div style="text-align:center;padding:32px 16px">
+<div class="stat-num">30+</div>
+<p style="color:var(--text2);font-size:14px;margin-top:8px" data-en="Happy Clients" data-ar="عميل سعيد">Happy Clients</p>
+</div>
+<div style="text-align:center;padding:32px 16px">
+<div class="stat-num">10+</div>
+<p style="color:var(--text2);font-size:14px;margin-top:8px" data-en="Team Members" data-ar="عضو فريق">Team Members</p>
+</div>
+<div style="text-align:center;padding:32px 16px">
+<div class="stat-num">99%</div>
+<p style="color:var(--text2);font-size:14px;margin-top:8px" data-en="Satisfaction Rate" data-ar="نسبة الرضا">Satisfaction Rate</p>
+</div>
+</div>
+
+<!-- Values -->
+<div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;max-width:900px;margin:48px auto 0">
+<div style="padding:24px;text-align:center;border:1px solid var(--border);border-radius:12px;background:var(--bg-card)">
+<div style="font-size:28px;margin-bottom:12px">💎</div>
+<h4 style="font-weight:600;margin-bottom:8px;color:var(--text)" data-en="Quality First" data-ar="الجودة أولاً">Quality First</h4>
+<p style="color:var(--text2);font-size:13px;line-height:1.6" data-en="We never compromise on code quality and user experience." data-ar="لا نقبل أبداً بالمساومة على جودة الكود وتجربة المستخدم.">We never compromise on code quality and user experience.</p>
+</div>
+<div style="padding:24px;text-align:center;border:1px solid var(--border);border-radius:12px;background:var(--bg-card)">
+<div style="font-size:28px;margin-bottom:12px">🚀</div>
+<h4 style="font-weight:600;margin-bottom:8px;color:var(--text)" data-en="Innovation Driven" data-ar="يقودنا الابتكار">Innovation Driven</h4>
+<p style="color:var(--text2);font-size:13px;line-height:1.6" data-en="We constantly explore new technologies and approaches." data-ar="نستكشف باستمرار التقنيات والأساليب الجديدة.">We constantly explore new technologies and approaches.</p>
+</div>
+<div style="padding:24px;text-align:center;border:1px solid var(--border);border-radius:12px;background:var(--bg-card)">
+<div style="font-size:28px;margin-bottom:12px">🤝</div>
+<h4 style="font-weight:600;margin-bottom:8px;color:var(--text)" data-en="Client Partnership" data-ar="شراكة مع العميل">Client Partnership</h4>
+<p style="color:var(--text2);font-size:13px;line-height:1.6" data-en="Your success is our success. We grow together." data-ar="نجاحك هو نجاحنا. ننمو معاً.">Your success is our success. We grow together.</p>
+</div>
+</div>
+</div></section>
+
+<!-- ========== CAREERS ========== -->
+<section id="careers" style="padding:100px 24px;background:var(--bg);transition:background .4s">
+<div style="max-width:1280px;margin:0 auto">
+<div class="reveal" style="text-align:center;margin-bottom:64px">
+<span style="font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.15em" data-en="CAREERS" data-ar="وظائف">CAREERS</span>
+<h2 style="font-size:clamp(28px,4vw,48px);font-weight:700;margin-top:12px;letter-spacing:-0.03em;color:var(--text)" data-en="Join Our Team" data-ar="انضم لفريقنا">Join Our Team</h2>
+<p style="color:var(--text2);font-size:17px;margin-top:16px;font-weight:300;max-width:550px;margin-left:auto;margin-right:auto" data-en="Build the future with us. We're always looking for talented, passionate people to join our growing team." data-ar="ابنِ المستقبل معنا. نبحث دائماً عن أشخاص موهوبين وشغوفين للانضمام لفريقنا المتنامي.">Build the future with us. We're always looking for talented, passionate people to join our growing team.</p>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:16px;max-width:800px;margin:0 auto">
+<div class="career-item reveal">
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+<div>
+<h4 style="font-weight:600;font-size:16px;color:var(--text)" data-en="Senior Frontend Developer" data-ar="مطور واجهات أمامية أول">Senior Frontend Developer</h4>
+<p style="color:var(--text2);font-size:13px;margin-top:4px" data-en="Remote · Full-time · React/Next.js" data-ar="عن بُعد · دوام كامل · React/Next.js">Remote · Full-time · React/Next.js</p>
+</div>
+<span style="font-size:12px;padding:6px 16px;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer" data-en="Apply →" data-ar="قدّم الآن ←">Apply →</span>
+</div>
+</div>
+<div class="career-item reveal">
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+<div>
+<h4 style="font-weight:600;font-size:16px;color:var(--text)" data-en="AI/ML Engineer" data-ar="مهندس ذكاء اصطناعي">AI/ML Engineer</h4>
+<p style="color:var(--text2);font-size:13px;margin-top:4px" data-en="Remote · Full-time · Python/TensorFlow" data-ar="عن بُعد · دوام كامل · Python/TensorFlow">Remote · Full-time · Python/TensorFlow</p>
+</div>
+<span style="font-size:12px;padding:6px 16px;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer" data-en="Apply →" data-ar="قدّم الآن ←">Apply →</span>
+</div>
+</div>
+<div class="career-item reveal">
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+<div>
+<h4 style="font-weight:600;font-size:16px;color:var(--text)" data-en="Mobile Developer (Flutter)" data-ar="مطور تطبيقات (Flutter)">Mobile Developer (Flutter)</h4>
+<p style="color:var(--text2);font-size:13px;margin-top:4px" data-en="Remote · Full-time · Android & iOS" data-ar="عن بُعد · دوام كامل · أندرويد و iOS">Remote · Full-time · Android & iOS</p>
+</div>
+<span style="font-size:12px;padding:6px 16px;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer" data-en="Apply →" data-ar="قدّم الآن ←">Apply →</span>
+</div>
+</div>
+<div class="career-item reveal">
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+<div>
+<h4 style="font-weight:600;font-size:16px;color:var(--text)" data-en="Backend Developer" data-ar="مطور واجهات خلفية">Backend Developer</h4>
+<p style="color:var(--text2);font-size:13px;margin-top:4px" data-en="Remote · Full-time · Node.js/Python" data-ar="عن بُعد · دوام كامل · Node.js/Python">Remote · Full-time · Node.js/Python</p>
+</div>
+<span style="font-size:12px;padding:6px 16px;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer" data-en="Apply →" data-ar="قدّم الآن ←">Apply →</span>
+</div>
+</div>
+<div class="career-item reveal">
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+<div>
+<h4 style="font-weight:600;font-size:16px;color:var(--text)" data-en="UI/UX Designer" data-ar="مصمم واجهات وتجربة مستخدم">UI/UX Designer</h4>
+<p style="color:var(--text2);font-size:13px;margin-top:4px" data-en="Remote · Part-time · Figma" data-ar="عن بُعد · دوام جزئي · Figma">Remote · Part-time · Figma</p>
+</div>
+<span style="font-size:12px;padding:6px 16px;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer" data-en="Apply →" data-ar="قدّم الآن ←">Apply →</span>
+</div>
+</div>
+</div>
+
+<div class="reveal" style="text-align:center;margin-top:48px">
+<p style="color:var(--text2);font-size:15px" data-en="Don't see your role? Send your CV to" data-ar="لا ترى دورك؟ أرسل سيرتك الذاتية إلى">Don't see your role? Send your CV to</p>
+<a href="mailto:devora.company.support@gmail.com?subject=Job Application" style="color:var(--accent);font-weight:600;text-decoration:none;font-size:15px">devora.company.support@gmail.com</a>
+</div>
+</div></section>
+
+<!-- ========== CONTACT / START PROJECT ========== -->
+<section id="contact" style="padding:100px 24px;background:var(--bg2);position:relative;overflow:hidden;transition:background .4s">
+<div class="dot-bg" style="position:absolute;inset:0;opacity:.2"></div>
+<div style="max-width:1280px;margin:0 auto;position:relative;z-index:1">
+<div class="reveal" style="text-align:center;margin-bottom:64px">
+<span style="font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.15em" data-en="START YOUR PROJECT" data-ar="ابدأ مشروعك">START YOUR PROJECT</span>
+<h2 style="font-size:clamp(28px,4vw,48px);font-weight:700;margin-top:12px;letter-spacing:-0.03em;color:var(--text)" data-en="Let's Build Something Great" data-ar="لنبني شيئاً عظيماً معاً">Let's Build Something Great</h2>
+<p style="color:var(--text2);font-size:17px;margin-top:16px;font-weight:300" data-en="Tell us about your project and we'll get back to you within 24 hours." data-ar="أخبرنا عن مشروعك وسنتواصل معك خلال 24 ساعة.">Tell us about your project and we'll get back to you within 24 hours.</p>
+</div>
+
+<div class="grid-responsive" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start">
+<!-- Form -->
+<div class="reveal">
+<form id="contact-form" style="display:flex;flex-direction:column;gap:18px">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+<div>
+<label style="font-size:13px;font-weight:500;color:var(--text2);margin-bottom:6px;display:block" data-en="Full Name *" data-ar="الاسم الكامل *">Full Name *</label>
+<input type="text" name="name" class="form-input" required data-ph-en="John Doe" data-ph-ar="أحمد محمد" placeholder="John Doe">
+</div>
+<div>
+<label style="font-size:13px;font-weight:500;color:var(--text2);margin-bottom:6px;display:block" data-en="Email *" data-ar="البريد الإلكتروني *">Email *</label>
+<input type="email" name="email" class="form-input" required data-ph-en="you@example.com" data-ph-ar="you@example.com" placeholder="you@example.com">
+</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+<div>
+<label style="font-size:13px;font-weight:500;color:var(--text2);margin-bottom:6px;display:block" data-en="Phone" data-ar="رقم الهاتف">Phone</label>
+<input type="tel" name="phone" class="form-input" data-ph-en="+20 xxx xxx xxxx" data-ph-ar="+20 xxx xxx xxxx" placeholder="+20 xxx xxx xxxx">
+</div>
+<div>
+<label style="font-size:13px;font-weight:500;color:var(--text2);margin-bottom:6px;display:block" data-en="Project Type *" data-ar="نوع المشروع *">Project Type *</label>
+<select name="project_type" class="form-input" style="cursor:pointer" required>
+<option value="" data-en="Select type..." data-ar="اختر النوع...">Select type...</option>
+<option value="Web Development" data-en="Web Development" data-ar="تطوير ويب">Web Development</option>
+<option value="Mobile App" data-en="Mobile App" data-ar="تطبيق موبايل">Mobile App</option>
+<option value="AI Solution" data-en="AI Solution" data-ar="حل ذكاء اصطناعي">AI Solution</option>
+<option value="UI/UX Design" data-en="UI/UX Design" data-ar="تصميم واجهات">UI/UX Design</option>
+<option value="Other" data-en="Other" data-ar="أخرى">Other</option>
+</select>
+</div>
+</div>
+<div>
+<label style="font-size:13px;font-weight:500;color:var(--text2);margin-bottom:6px;display:block" data-en="Budget Range" data-ar="نطاق الميزانية">Budget Range</label>
+<select name="budget" class="form-input" style="cursor:pointer">
+<option value="" data-en="Select budget..." data-ar="اختر الميزانية...">Select budget...</option>
+<option value="$1k - $5k">$1k - $5k</option>
+<option value="$5k - $15k">$5k - $15k</option>
+<option value="$15k - $50k">$15k - $50k</option>
+<option value="$50k+">$50k+</option>
+</select>
+</div>
+<div>
+<label style="font-size:13px;font-weight:500;color:var(--text2);margin-bottom:6px;display:block" data-en="Project Details *" data-ar="تفاصيل المشروع *">Project Details *</label>
+<textarea name="message" class="form-input" rows="5" required data-ph-en="Tell us about your project, goals, and timeline..." data-ph-ar="أخبرنا عن مشروعك وأهدافك والجدول الزمني..." placeholder="Tell us about your project, goals, and timeline..."></textarea>
+</div>
+<button type="submit" class="btn-primary" style="width:100%;justify-content:center;padding:16px" id="submit-btn">
+<span id="btn-text" data-en="Send Message" data-ar="إرسال الرسالة">Send Message</span>
+<span id="btn-icon">→</span>
+</button>
+</form>
+</div>
+
+<!-- Contact Info -->
+<div class="reveal">
+<div style="display:flex;flex-direction:column;gap:20px">
+<div class="info-card">
+<div style="display:flex;align-items:center;gap:16px">
+<div style="width:50px;height:50px;border-radius:12px;background:rgba(139,92,246,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px">📧</div>
+<div>
+<p style="font-size:13px;color:var(--text2)" data-en="Email Us" data-ar="راسلنا">Email Us</p>
+<a href="mailto:devora.company.support@gmail.com" style="color:var(--text);text-decoration:none;font-weight:600;font-size:14px;transition:color .2s;display:block" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">devora.company.support@gmail.com</a>
+</div>
+</div>
+</div>
+<div class="info-card">
+<div style="display:flex;align-items:center;gap:16px">
+<div style="width:50px;height:50px;border-radius:12px;background:rgba(139,92,246,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px">📞</div>
+<div>
+<p style="font-size:13px;color:var(--text2)" data-en="Call Us" data-ar="اتصل بنا">Call Us</p>
+<a href="tel:+201055463780" style="color:var(--text);text-decoration:none;font-weight:600;font-size:14px;transition:color .2s;display:block" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">01055463780</a>
+</div>
+</div>
+</div>
+<div class="info-card">
+<div style="display:flex;align-items:center;gap:16px">
+<div style="width:50px;height:50px;border-radius:12px;background:rgba(139,92,246,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px">🕐</div>
+<div>
+<p style="font-size:13px;color:var(--text2)" data-en="Working Hours" data-ar="ساعات العمل">Working Hours</p>
+<p style="font-weight:600;font-size:14px;color:var(--text)" data-en="Sunday - Thursday: 9AM - 6PM" data-ar="الأحد - الخميس: 9ص - 6م">Sunday - Thursday: 9AM - 6PM</p>
+</div>
+</div>
+</div>
+<div class="info-card">
+<div style="display:flex;align-items:center;gap:16px">
+<div style="width:50px;height:50px;border-radius:12px;background:rgba(139,92,246,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px">📍</div>
+<div>
+<p style="font-size:13px;color:var(--text2)" data-en="Location" data-ar="الموقع">Location</p>
+<p style="font-weight:600;font-size:14px;color:var(--text)" data-en="Remote-First Company" data-ar="شركة تعمل عن بُعد">Remote-First Company</p>
+</div>
+</div>
+</div>
+
+<!-- CTA Card -->
+<div style="background:linear-gradient(135deg,rgba(139,92,246,.15),rgba(139,92,246,.05));border:1px solid rgba(139,92,246,.3);border-radius:16px;padding:32px;text-align:center">
+<div style="font-size:36px;margin-bottom:12px">🚀</div>
+<h4 style="font-weight:600;margin-bottom:8px;color:var(--text);font-size:18px" data-en="Ready to get started?" data-ar="مستعد للبدء؟">Ready to get started?</h4>
+<p style="color:var(--text2);font-size:14px;line-height:1.6" data-en="We typically respond within 24 hours. Let's turn your idea into reality." data-ar="نرد عادةً خلال 24 ساعة. لنحول فكرتك إلى واقع.">We typically respond within 24 hours. Let's turn your idea into reality.</p>
+</div>
+</div>
+</div>
+</div>
+</div></section>
+
+<!-- ========== FOOTER ========== -->
+<footer style="padding:64px 24px 32px;background:var(--bg);border-top:1px solid var(--border);transition:background .4s">
+<div style="max-width:1280px;margin:0 auto">
+<div class="grid-responsive" style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:48px">
+<div>
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+<img src="https://z-cdn-media.chatglm.cn/files/07f251b9-14fd-4624-b6cd-6691a64ee023.png?auth_key=1883600230-1996aaf869bf4d3799b2ca8452c87693-0-583f8622721dd168f82c78a87649cbbf" class="logo-foot" alt="DEVORA Logo">
+<span style="font-size:20px;font-weight:700;letter-spacing:-0.5px;color:var(--text)">DEVORA</span>
+</div>
+<p style="color:var(--text2);font-size:14px;line-height:1.7;max-width:320px" data-en="Programming. Creativity. Innovation. — A leading company in software and AI development, delivering innovative technical solutions." data-ar="برمجة. إبداع. ابتكار. — شركة رائدة في تطوير البرمجيات والذكاء الاصطناعي، تقدم حلولاً تقنية مبتكرة.">Programming. Creativity. Innovation. — A leading company in software and AI development, delivering innovative technical solutions.</p>
+</div>
+<div>
+<h4 style="font-weight:600;margin-bottom:16px;font-size:14px;color:var(--text)" data-en="Quick Links" data-ar="روابط سريعة">Quick Links</h4>
+<div style="display:flex;flex-direction:column;gap:10px">
+<a href="#home" style="color:var(--text2);text-decoration:none;font-size:14px;transition:color .2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text2)'" data-en="Home" data-ar="الرئيسية">Home</a>
+<a href="#services" style="color:var(--text2);text-decoration:none;font-size:14px;transition:color .2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text2)'" data-en="Services" data-ar="خدماتنا">Services</a>
+<a href="#ai-solutions" style="color:var(--text2);text-decoration:none;font-size:14px;transition:color .2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text2)'" data-en="AI Solutions" data-ar="حلول AI">AI Solutions</a>
+<a href="#about" style="color:var(--text2);text-decoration:none;font-size:14px;transition:color .2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text2)'" data-en="About" data-ar="من نحن">About</a>
+<a href="#careers" style="color:var(--text2);text-decoration:none;font-size:14px;transition:color .2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text2)'" data-en="Careers" data-ar="وظائف">Careers</a>
+<a href="#contact" style="color:var(--text2);text-decoration:none;font-size:14px;transition:color .2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text2)'" data-en="Contact" data-ar="تواصل معنا">Contact</a>
+</div>
+</div>
+<div>
+<h4 style="font-weight:600;margin-bottom:16px;font-size:14px;color:var(--text)" data-en="Contact Us" data-ar="تواصل معنا">Contact Us</h4>
+<div style="display:flex;flex-direction:column;gap:10px">
+<a href="mailto:devora.company.support@gmail.com" style="color:var(--text2);text-decoration:none;font-size:13px;transition:color .2s;word-break:break-all" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text2)'">devora.company.support@gmail.com</a>
+<a href="tel:+201055463780" style="color:var(--text2);text-decoration:none;font-size:13px;transition:color .2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text2)'">01055463780</a>
+</div>
+</div>
+</div>
+<div style="border-top:1px solid var(--border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+<p style="color:var(--text2);font-size:13px" data-en="© 2025 DEVORA. All rights reserved." data-ar="© 2025 ديفورا. جميع الحقوق محفوظة.">© 2025 DEVORA. All rights reserved.</p>
+<p style="color:var(--accent);font-size:13px;font-weight:500">Programming. Creativity. Innovation.</p>
+</div>
+</div>
+</footer>
+
+<!-- ========== JAVASCRIPT ========== -->
+<script>
+(function(){
+// ===== STATE =====
+let currentTheme = localStorage.getItem('devora-theme') || 'dark';
+let currentLang = localStorage.getItem('devora-lang') || 'en';
+let canvasRunning = false;
+
+// ===== INIT ON DOM READY =====
+document.addEventListener('DOMContentLoaded', function(){
+applyTheme(currentTheme);
+applyLang(currentLang);
+initCanvas();
+initReveal();
+handleResize();
+window.addEventListener('resize', handleResize);
+initForm();
+smoothScroll();
+});
+
+// ===== THEME =====
+window.toggleTheme = function(){
+currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+applyTheme(currentTheme);
+localStorage.setItem('devora-theme', currentTheme);
+};
+
+function applyTheme(theme){
+document.documentElement.setAttribute('data-theme', theme);
+var icon = document.getElementById('theme-icon');
+if(icon){
+icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+}
+}
+
+// ===== LANGUAGE =====
+window.toggleLang = function(){
+currentLang = currentLang === 'en' ? 'ar' : 'en';
+applyLang(currentLang);
+localStorage.setItem('devora-lang', currentLang);
+};
+
+function applyLang(lang){
+currentLang = lang;
+var html = document.documentElement;
+html.lang = lang;
+html.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+// Lang button
+var btn = document.getElementById('lang-btn');
+if(btn) btn.textContent = lang === 'en' ? 'ع' : 'EN';
+
+// All data-en / data-ar elements
+var els = document.querySelectorAll('[data-en]');
+for(var i = 0; i < els.length; i++){
+var text = els[i].getAttribute('data-' + lang);
+if(text !== null && text !== undefined){
+els[i].textContent = text;
+}
+}
+
+// Placeholders
+var phs = document.querySelectorAll('[data-ph-en]');
+for(var i = 0; i < phs.length; i++){
+var ph = phs[i].getAttribute('data-ph-' + lang);
+if(ph !== null && ph !== undefined){
+phs[i].placeholder = ph;
+}
+}
+
+// Select options
+var opts = document.querySelectorAll('select option[data-en]');
+for(var i = 0; i < opts.length; i++){
+var optText = opts[i].getAttribute('data-' + lang);
+if(optText !== null && optText !== undefined && opts[i].value !== ''){
+opts[i].textContent = optText;
+}
+}
+
+// Arrow direction
+var arrow = document.getElementById('btn-icon');
+if(arrow) arrow.textContent = lang === 'ar' ? '←' : '→';
+}
+
+// ===== MOBILE MENU =====
+window.toggleMobile = function(){
+var menu = document.getElementById('mobile-menu');
+var overlay = document.getElementById('mobile-overlay');
+if(menu.classList.contains('open')){
+menu.classList.remove('open');
+overlay.style.display = 'none';
+} else {
+menu.classList.add('open');
+overlay.style.display = 'block';
+}
+};
+
+// ===== RESPONSIVE =====
+function handleResize(){
+var w = window.innerWidth;
+var burger = document.querySelector('.show-mobile');
+// Grids handled by CSS .grid-responsive
+}
+
+// ===== TOAST =====
+window.showToast = function(msg){
+var t = document.getElementById('toast');
+t.textContent = msg;
+t.classList.add('show');
+setTimeout(function(){ t.classList.remove('show'); }, 5000);
+};
+
+// ===== CHAT =====
+var chatData = {
+en: [
+{ user: 'Automate support', ai: 'Great choice! Our AI Assistant handles up to 80% of customer queries automatically, 24/7. It learns from your FAQ and past conversations to provide accurate, personalized responses — freeing your team for complex issues.' },
+{ user: 'Analyze my data', ai: 'DEVORA AI processes and organizes your business data in real-time. It identifies patterns, generates reports, and provides actionable insights — helping you make smarter, faster decisions.' },
+{ user: 'Integrate AI', ai: 'We make AI integration seamless. DEVORA AI connects with your existing CRM, helpdesk, and tools in minutes. No code changes needed — just plug in and start seeing results immediately.' }
+],
+ar: [
+{ user: 'أتمتة الدعم', ai: 'اختيار ممتاز! يمكن لمساعدنا الذكي التعامل مع ما يصل إلى 80% من استفسارات العملاء تلقائياً على مدار الساعة. يتعلم من الأسئلة الشائعة والمحادثات السابقة لتقديم ردود دقيقة ومخصصة.' },
+{ user: 'تحليل بياناتي', ai: 'يمكن لذكاء ديفورا معالجة وتنظيم بيانات عملك في الوقت الفعلي. يحدد الأنماط ويولد التقارير ويقدم رؤى قابلة للتنفيذ — لمساعدتك على اتخاذ قرارات أذكى وأسرع.' },
+{ user: 'دمج الذكاء', ai: 'نجعل تكامل الذكاء الاصطناعي سلساً. يتصل مساعد ديفورا الذكي بنظام إدارة العملاء وأدوات المساعدة وأدواتك الحالية في دقائق. بدون أي تغيير في الكود — فقط وصّل وابدأ.' }
+]
+};
+
+window.sendSuggestion = function(idx){
+var msgs = document.getElementById('chat-messages');
+var data = chatData[currentLang][idx];
+if(!data || !msgs) return;
+
+// User bubble
+var u = document.createElement('div');
+u.className = 'chat-user';
+u.style.cssText = 'padding:10px 14px;max-width:75%;margin-left:auto';
+u.innerHTML = '<p style="font-size:13px">' + data.user + '</p>';
+msgs.appendChild(u);
+
+// Typing dots
+var td = document.createElement('div');
+td.className = 'chat-ai';
+td.style.cssText = 'padding:10px 14px;display:flex;gap:5px;align-items:center';
+td.innerHTML = '<span class="tdot" style="width:6px;height:6px;border-radius:50%;background:var(--text2);display:inline-block"></span><span class="tdot" style="width:6px;height:6px;border-radius:50%;background:var(--text2);display:inline-block"></span><span class="tdot" style="width:6px;height:6px;border-radius:50%;background:var(--text2);display:inline-block"></span>';
+msgs.appendChild(td);
+msgs.scrollTop = msgs.scrollHeight;
+
+setTimeout(function(){
+td.innerHTML = '<p style="font-size:13px;color:var(--text2);line-height:1.5">' + data.ai + '</p>';
+msgs.scrollTop = msgs.scrollHeight;
+}, 1500);
+};
+
+// ===== FORM =====
+function initForm(){
+var form = document.getElementById('contact-form');
+if(!form) return;
+form.addEventListener('submit', function(e){
+e.preventDefault();
+var btn = document.getElementById('submit-btn');
+var btnText = document.getElementById('btn-text');
+var orig = btnText.textContent;
+btnText.textContent = currentLang === 'ar' ? 'جاري الإرسال...' : 'Sending...';
+btn.disabled = true;
+btn.style.opacity = '0.6';
+
+var fd = new FormData(form);
+var obj = {};
+fd.forEach(function(v,k){ obj[k] = v; });
+
+fetch('https://formsubmit.co/ajax/devora.company.support@gmail.com', {
+method: 'POST',
+headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+body: JSON.stringify(obj)
+})
+.then(function(r){ return r.json(); })
+.then(function(data){
+if(data.success){
+showToast(currentLang === 'ar' ? '✓ تم إرسال رسالتك بنجاح! سنتواصل معك قريباً' : '✓ Message sent successfully! We will contact you soon');
+form.reset();
+// Restore placeholders
+applyLang(currentLang);
+} else {
+fallbackMailto(obj);
+}
+})
+.catch(function(){
+fallbackMailto(obj);
+})
+.finally(function(){
+btnText.textContent = orig;
+btn.disabled = false;
+btn.style.opacity = '1';
+});
+});
+}
+
+function fallbackMailto(obj){
+var subject = encodeURIComponent('Project Inquiry - DEVORA Website');
+var body = encodeURIComponent(
+'Name: ' + (obj.name||'') + '\n' +
+'Email: ' + (obj.email||'') + '\n' +
+'Phone: ' + (obj.phone||'N/A') + '\n' +
+'Project Type: ' + (obj.project_type||'') + '\n' +
+'Budget: ' + (obj.budget||'N/A') + '\n\n' +
+'Message:\n' + (obj.message||'')
+);
+window.location.href = 'mailto:devora.company.support@gmail.com?subject=' + subject + '&body=' + body;
+showToast(currentLang === 'ar' ? 'يتم فتح تطبيق البريد...' : 'Opening mail app...');
+}
+
+// ===== NEURAL CANVAS =====
+function initCanvas(){
+var canvas = document.getElementById('neural-canvas');
+if(!canvas) return;
+var ctx = canvas.getContext('2d');
+var w, h, particles = [];
+var mouse = { x: -9999, y: -9999 };
+var maxDist = 120;
+
+function resize(){
+var sec = canvas.parentElement;
+w = canvas.width = sec.offsetWidth;
+h = canvas.height = sec.offsetHeight;
+}
+
+function create(){
+particles = [];
+var count = Math.min(70, Math.floor(w * h / 14000));
+for(var i = 0; i < count; i++){
+particles.push({
+x: Math.random() * w,
+y: Math.random() * h,
+vx: (Math.random() - 0.5) * 0.5,
+vy: (Math.random() - 0.5) * 0.5,
+r: Math.random() * 1.8 + 0.5
+});
+}
+}
+
+function draw(){
+ctx.clearRect(0, 0, w, h);
+
+for(var i = 0; i < particles.length; i++){
+var p = particles[i];
+p.x += p.vx;
+p.y += p.vy;
+if(p.x < 0 || p.x > w) p.vx *= -1;
+if(p.y < 0 || p.y > h) p.vy *= -1;
+
+var dx = mouse.x - p.x;
+var dy = mouse.y - p.y;
+var dist = Math.sqrt(dx*dx + dy*dy);
+if(dist < 180){
+p.x -= dx * 0.006;
+p.y -= dy * 0.006;
+}
+}
+
+// Lines
+for(var i = 0; i < particles.length; i++){
+for(var j = i+1; j < particles.length; j++){
+var dx = particles[i].x - particles[j].x;
+var dy = particles[i].y - particles[j].y;
+var dist = Math.sqrt(dx*dx + dy*dy);
+if(dist < maxDist){
+var alpha = (1 - dist/maxDist) * 0.2;
+ctx.strokeStyle = 'rgba(139,92,246,' + alpha + ')';
+ctx.lineWidth = 0.5;
+ctx.beginPath();
+ctx.moveTo(particles[i].x, particles[i].y);
+ctx.lineTo(particles[j].x, particles[j].y);
+ctx.stroke();
+}
+}
+}
+
+// Dots
+for(var i = 0; i < particles.length; i++){
+var p = particles[i];
+var dx = mouse.x - p.x;
+var dy = mouse.y - p.y;
+var dist = Math.sqrt(dx*dx + dy*dy);
+var glow = dist < 180 ? 1 : 0.5;
+
+ctx.beginPath();
+ctx.arc(p.x, p.y, p.r * (0.8 + glow * 0.5), 0, Math.PI * 2);
+ctx.fillStyle = 'rgba(139,92,246,' + (0.5 * glow + 0.2) + ')';
+ctx.fill();
+
+if(dist < 180){
+ctx.beginPath();
+ctx.arc(p.x, p.y, p.r * 4, 0, Math.PI * 2);
+ctx.fillStyle = 'rgba(139,92,246,0.06)';
+ctx.fill();
+}
+}
+
+requestAnimationFrame(draw);
+}
+
+canvas.addEventListener('mousemove', function(e){
+var rect = canvas.getBoundingClientRect();
+mouse.x = e.clientX - rect.left;
+mouse.y = e.clientY - rect.top;
+});
+canvas.addEventListener('mouseleave', function(){
+mouse.x = -9999;
+mouse.y = -9999;
+});
+
+window.addEventListener('resize', function(){
+resize();
+create();
+});
+
+resize();
+create();
+draw();
+}
+
+// ===== SCROLL REVEAL =====
+function initReveal(){
+var observer = new IntersectionObserver(function(entries){
+for(var i = 0; i < entries.length; i++){
+if(entries[i].isIntersecting){
+entries[i].target.classList.add('visible');
+}
+}
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+var els = document.querySelectorAll('.reveal');
+for(var i = 0; i < els.length; i++){
+observer.observe(els[i]);
+}
+}
+
+// ===== SMOOTH SCROLL =====
+function smoothScroll(){
+var links = document.querySelectorAll('a[href^="#"]');
+for(var i = 0; i < links.length; i++){
+links[i].addEventListener('click', function(e){
+e.preventDefault();
+var id = this.getAttribute('href');
+var el = document.querySelector(id);
+if(el){
+el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+});
+}
+}
+
+})();
+</script>
+
+</body>
+</html>
