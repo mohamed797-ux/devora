@@ -736,10 +736,26 @@ localStorage.setItem('devora-lang', currentLang);
 };
 
 function applyLang(lang){
+  
 currentLang = lang;
 var html = document.documentElement;
 html.lang = lang;
 html.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  var menu = document.getElementById('mobile-menu');
+
+if(menu){
+    if(lang === 'ar'){
+        menu.stylestyle="position:fixed;top:0;width:280px;height:100vh;...";
+        menu.style.left = 'auto';
+        menu.style.borderLeft = '1px solid var(--border)';
+        menu.style.borderRight = 'none';
+    } else {
+        menu.style.left = '0';
+        menu.style.right = 'auto';
+        menu.style.borderRight = '1px solid var(--border)';
+        menu.style.borderLeft = 'none';
+    }
+}
 
 // Lang button
 var btn = document.getElementById('lang-btn');
